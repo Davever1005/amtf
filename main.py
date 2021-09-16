@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 with open("file.txt", "r") as f:
     a = f.readline()  # starts as a string
     a = int(a)
@@ -11,7 +10,7 @@ with open("file.txt", "r") as f:
 
 # check if its an empty string, otherwise should be able to cast using int()
 
-if st.button("Click me"):
+if st.button("AMTF!"):
     a += 1
     with open("file.txt", "w") as f:
         f.truncate()
