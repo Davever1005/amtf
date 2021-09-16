@@ -1,5 +1,7 @@
 import streamlit as st
 
+
+
 with open("file.txt", "r") as f:
     a = f.readline()  # starts as a string
     a = int(a)
@@ -16,4 +18,12 @@ if st.button("AMTF!"):
         f.truncate()
         f.write(f"{a}")
         st.write(a)
-        st.progress(a)
+    st.progress(a)
+    if a == 100:
+        st.balloons()
+
+if st.button("reset!"):
+    a = 0
+    with open("file.txt", "w") as f:
+        f.truncate()
+        f.write(f"{a}")
