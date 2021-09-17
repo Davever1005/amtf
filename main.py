@@ -54,7 +54,9 @@ values = [a, a2]
 
 st.header("念佛数量比例")
 
-fig= go.Figure(data = [go.Pie(labels=labels, values=values, scalegroup = 'one')])
+irises_colors = ['rgb(25,195,95)','royalblue']
+
+fig= go.Figure(data = [go.Pie(labels=labels, values=values, scalegroup = 'one', marker_colors=irises_colors)])
 
 fig.update_traces(textposition='none', textinfo= 'percent', insidetextorientation='radial')
 fig.update_layout(font=dict(family="Helvetica",size=14))
@@ -78,7 +80,7 @@ fig13.add_trace(go.Bar(
     x = apps,
     y = y_s1,
     name = '莲少',
-    marker_color = 'cyan',
+    marker_color = 'rgb(25,195,95)',
     text = y_s1
     ))
 fig13.add_trace(go.Bar(
