@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.graph_objects as go
 
 
-
 with open("./data/amtf1.txt", "r") as f:
     a = f.readline()  # starts as a string
     if a == "":
@@ -15,9 +14,15 @@ with open("./data/amtf2.txt", "r") as f:
         a2 = 0
     else: a2 = int(a2)
 
+with open("./data/rec.txt", "r") as f:
+    rec = f.readlines()  # starts as a string
+    young = rec[0].split(',')
+    young[-1] = young[-1].strip('\n')
+    old = rec[1].split(',')
+
 
 sum = a + a2
-st.write("阿弥陀佛 佛号总数： " + str(sum) )
+st.title("阿弥陀佛 佛号总数： " + str(sum) )
 st.write("莲少佛号数量： " + str(a))
 st.write("莲青佛号数量： " + str(a2))
 
@@ -44,13 +49,62 @@ elif grp == '莲青':
             f.write(f"{a2}")
 
 
-labels4 = ['莲少','莲青']
-values4 = [a, a2]
+labels = ['莲少','莲青']
+values = [a, a2]
 
-fig4= go.Figure(data = [go.Pie(title = '念佛数量比例',labels=labels4, values=values4, scalegroup = 'one')])
+st.header("念佛数量比例")
 
-fig4.update_traces(textposition='none', textinfo= 'percent', insidetextorientation='radial')
-fig4.update_layout(font=dict(family="Helvetica",size=14))
+fig= go.Figure(data = [go.Pie(labels=labels, values=values, scalegroup = 'one')])
 
-st.plotly_chart(fig4)
+fig.update_traces(textposition='none', textinfo= 'percent', insidetextorientation='radial')
+fig.update_layout(font=dict(family="Helvetica",size=14))
 
+st.plotly_chart(fig)
+
+#comparison
+#st.text('=========================================================================================================')
+st.header("一周内的佛号总数量")
+
+#dataset
+apps = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7']
+young = [int(i) for i in young]
+old = [int(i) for i in old]
+y_s1 = young
+y_s2 = old
+
+#create bar
+fig13 = go.Figure()
+fig13.add_trace(go.Bar(
+    x = apps,
+    y = y_s1,
+    name = '莲少',
+    marker_color = 'cyan',
+    text = y_s1
+    ))
+fig13.add_trace(go.Bar(
+    x= apps,
+    y = y_s2,
+    name = '莲青',
+    marker_color = 'royalblue',
+    text = y_s2
+    ))
+
+#labelling
+fig13.update_layout(barmode='group', xaxis_tickangle=-45)
+fig13.update_traces(textposition='none')
+fig13.update_layout(
+    xaxis = dict(
+                title = '天',
+                titlefont_size=18,
+                tickfont_size=18,
+                showgrid=False),
+    yaxis = dict(
+                title = '佛号数量',
+                titlefont_size=18,
+                tickfont_size=18,
+                showgrid=True),
+    width=900,
+    height=600)
+
+#plot bar
+st.plotly_chart(fig13)
